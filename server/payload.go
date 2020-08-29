@@ -17,6 +17,7 @@ type productPresenter struct {
 	DemoAudioURL  string     `json:"demo_audio_url,omitempty"`
 	Permalink     string     `json:"permalink,omitempty"`
 	SKU           string     `json:"sku,omitempty"`
+	Tags          []string   `json:"tags,omitempty"`
 	CreatedAt     time.Time  `json:"created_at"`
 	UpdatedAt     time.Time  `json:"updated_at"`
 	DeletedAt     *time.Time `json:"deleted_at,omitempty"`
@@ -48,6 +49,7 @@ func (p *productsResponse) MarshalJSON() ([]byte, error) {
 			SKU:           product.SKU,
 			CreatedAt:     product.CreatedAt,
 			UpdatedAt:     product.UpdatedAt,
+			Tags:          product.Tags,
 		}
 		if product.DeletedAt != nil {
 			presenter.DeletedAt = product.DeletedAt
