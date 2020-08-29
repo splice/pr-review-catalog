@@ -1,0 +1,81 @@
+# github.com/DataDog/datadog-go v4.0.0+incompatible
+## explicit
+github.com/DataDog/datadog-go/statsd
+# github.com/davecgh/go-spew v1.1.1
+github.com/davecgh/go-spew/spew
+# github.com/felixge/httpsnoop v1.0.1
+## explicit
+github.com/felixge/httpsnoop
+# github.com/go-sql-driver/mysql v1.5.0
+## explicit
+# github.com/google/uuid v1.1.1
+## explicit
+github.com/google/uuid
+# github.com/gorilla/mux v1.8.0
+## explicit
+github.com/gorilla/mux
+# github.com/gorilla/schema v1.2.0
+## explicit
+github.com/gorilla/schema
+# github.com/json-iterator/go v1.1.9
+github.com/json-iterator/go
+# github.com/konsorten/go-windows-terminal-sequences v1.0.3
+github.com/konsorten/go-windows-terminal-sequences
+# github.com/liamylian/jsontime/v2 v2.0.0
+## explicit
+github.com/liamylian/jsontime/v2/v2
+# github.com/lib/pq v1.8.0
+## explicit
+# github.com/markbates/pkger v0.17.0
+## explicit
+# github.com/mattn/go-sqlite3 v1.14.2
+## explicit
+# github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+github.com/modern-go/concurrent
+# github.com/modern-go/reflect2 v1.0.1
+github.com/modern-go/reflect2
+# github.com/opentracing/opentracing-go v1.2.0
+## explicit
+# github.com/philhofer/fwd v1.0.0
+## explicit
+github.com/philhofer/fwd
+# github.com/pkg/errors v0.9.1
+## explicit
+github.com/pkg/errors
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/sirupsen/logrus v1.6.0
+## explicit
+github.com/sirupsen/logrus
+# github.com/stretchr/testify v1.6.1
+## explicit
+github.com/stretchr/testify/assert
+# github.com/tinylib/msgp v1.1.2
+github.com/tinylib/msgp/msgp
+# golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+golang.org/x/sys/windows/registry
+# golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e
+## explicit
+golang.org/x/time/rate
+# golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
+## explicit
+golang.org/x/xerrors
+golang.org/x/xerrors/internal
+# gopkg.in/DataDog/dd-trace-go.v1 v1.26.0
+## explicit
+gopkg.in/DataDog/dd-trace-go.v1/contrib/database/sql
+gopkg.in/DataDog/dd-trace-go.v1/contrib/database/sql/internal
+gopkg.in/DataDog/dd-trace-go.v1/contrib/internal/httputil
+gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http
+gopkg.in/DataDog/dd-trace-go.v1/ddtrace
+gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext
+gopkg.in/DataDog/dd-trace-go.v1/ddtrace/internal
+gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer
+gopkg.in/DataDog/dd-trace-go.v1/internal
+gopkg.in/DataDog/dd-trace-go.v1/internal/globalconfig
+gopkg.in/DataDog/dd-trace-go.v1/internal/log
+gopkg.in/DataDog/dd-trace-go.v1/internal/version
+# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+gopkg.in/yaml.v3
