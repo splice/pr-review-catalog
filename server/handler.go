@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/schema"
 	"github.com/pkg/errors"
 	"github.com/splice/catalog-interview/model"
+	"github.com/splice/catalog-interview/storage"
 )
 
 const (
@@ -24,12 +25,13 @@ type pageController struct {
 // productRepository is implemented by any type that can provide access
 // to products and their related tables.
 type productRepository interface {
-	FindAllProducts(ctx context.Context, limit int) ([]*model.Product, error)
+	FindAllProducts(ctx context.Context, params storage.ProductsParams) ([]*model.Product, error)
 }
 
 type getProductsArgs struct {
 	// Limit is the number of items per page
-	Limit int `schema:"limit"`
+	Limit int    `schema:"limit"`
+	Tag   string `schema:"tag"`
 }
 
 // getProducts returns a paginated list of products.
@@ -44,8 +46,13 @@ func (pc *pageController) getProducts(w http.ResponseWriter, r *http.Request) {
 	if params.Limit == 0 || params.Limit > maxLimit {
 		params.Limit = maxLimit
 	}
+	// todo add param validations
 
-	products, err := pc.products.FindAllProducts(r.Context(), params.Limit)
+	storageParms := storage.ProductsParams{
+		Tag: params.Tag,
+	}
+
+	products, err := pc.products.FindAllProducts(r.Context(), storageParms)
 	if err != nil {
 		pc.serverError(w, errors.Wrap(err, errFetchingProduct))
 		return
