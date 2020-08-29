@@ -9,6 +9,7 @@ type Product struct {
 	ID            int        `json:"id"`
 	UUID          string     `json:"uuid"`
 	Name          string     `json:"name"`
+	Cost          int        `json:"cost"`
 	Description   string     `json:"description"`
 	CoverImageURL string     `json:"cover_image_url"`
 	DemoAudioURL  string     `json:"demo_audio_url"`
