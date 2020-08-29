@@ -16,4 +16,5 @@ func TestFindAllProducts(t *testing.T) {
 	assert.Equal(t, "Product name 1", products[0].Name)
 	assert.False(t, products[0].CreatedAt.IsZero())
 	assert.Equal(t, 10, products[0].Cost)
+	assert.Equal(t, []string{"percussion", "bongo"}, products[0].Tags)
 }
