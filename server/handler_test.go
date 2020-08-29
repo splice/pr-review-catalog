@@ -24,12 +24,12 @@ func TestGetProducts(t *testing.T) {
 	controller.ServeHTTP(rec, req)
 
 	assert.Equal(t, http.StatusOK, rec.Code)
-	response := []*productPresenter{}
+	response := &getProductsPresenter{}
 	assert.NoError(t, json.Unmarshal(rec.Body.Bytes(), &response))
 
-	assert.Len(t, response, 2)
-	assert.Equal(t, "abc", response[0].Name)
-	assert.Equal(t, "xyz", response[1].Name)
+	assert.Len(t, response.Products, 2)
+	assert.Equal(t, "abc", response.Products[0].Name)
+	assert.Equal(t, "xyz", response.Products[1].Name)
 }
 
 var (

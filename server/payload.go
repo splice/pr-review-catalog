@@ -10,6 +10,7 @@ import (
 type productPresenter struct {
 	UUID          string     `json:"uuid"`
 	Name          string     `json:"name"`
+	Cost          int        `json:"cost"`
 	MainGenreUUID string     `json:"main_genre_uuid,omitempty"`
 	Description   string     `json:"description,omitempty"`
 	CoverImageURL string     `json:"cover_image_url,omitempty"`
@@ -25,14 +26,21 @@ type productsResponse struct {
 	products []*model.Product
 }
 
+type getProductsPresenter struct {
+	Products  []*productPresenter
+	TotalCost int
+}
+
 // MarshalJSON presents the structure in JSON format.
 func (p *productsResponse) MarshalJSON() ([]byte, error) {
+	var getProductsResponse getProductsPresenter
 	var products []*productPresenter
 
 	for _, product := range p.products {
 		presenter := &productPresenter{
 			UUID:          product.UUID,
 			Name:          product.Name,
+			Cost:          product.Cost,
 			Description:   product.Description,
 			CoverImageURL: product.CoverImageURL,
 			DemoAudioURL:  product.DemoAudioURL,
@@ -44,8 +52,13 @@ func (p *productsResponse) MarshalJSON() ([]byte, error) {
 		if product.DeletedAt != nil {
 			presenter.DeletedAt = product.DeletedAt
 		}
+		getProductsResponse.TotalCost += product.Cost
 		products = append(products, presenter)
 	}
 
-	return json.Marshal(products)
+	if len(products) > 0 {
+		getProductsResponse.Products = products
+	}
+
+	return json.Marshal(getProductsResponse)
 }

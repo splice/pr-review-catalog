@@ -15,4 +15,5 @@ func TestFindAllProducts(t *testing.T) {
 	assert.Len(t, products, 1)
 	assert.Equal(t, "Product name 1", products[0].Name)
 	assert.False(t, products[0].CreatedAt.IsZero())
+	assert.Equal(t, 10, products[0].Cost)
 }
