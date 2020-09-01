@@ -3,13 +3,10 @@ package healthcheck
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"sync"
 	"time"
-
-	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
 
 // These constants are the possible status for responses. Use them to prevent typos.
@@ -96,9 +93,6 @@ func (m *Monitor) check(ctx context.Context) error {
 		start = time.Now()
 		err   error
 	)
-
-	span, ctx := tracer.StartSpanFromContext(ctx, "healthcheck", tracer.ResourceName(fmt.Sprintf("%s.%s", m.Category, m.Name)))
-	defer func() { span.Finish(tracer.WithError(err)) }()
 
 	status := &serviceState{Name: m.Name, Status: StatusOK}
 	ctx, cancel := context.WithTimeout(ctx, m.Timeout)

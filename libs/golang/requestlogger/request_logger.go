@@ -3,12 +3,10 @@ package requestlogger
 import (
 	"context"
 	"net/http"
-	"os"
 
 	"github.com/felixge/httpsnoop"
 	"github.com/sirupsen/logrus"
 	"github.com/splice/catalog-interview/libs/golang/requestid"
-	datadog "gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
 
 // Since `context.WithValue` can have collisions if we use simple types, it's
@@ -54,15 +52,10 @@ func Middleware(h http.Handler, serviceName string, skipPaths ...string) http.Ha
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		span, _ := datadog.SpanFromContext(r.Context())
-
 		logger, _ := FromContext(r.Context())
 		logger = logger.WithContext(r.Context()).WithFields(logrus.Fields{
-			"service":     serviceName,
-			"env":         os.Getenv("DATADOG_ENV"),
-			"req_id":      requestid.FromContext(r.Context()),
-			"dd.trace_id": span.Context().TraceID(),
-			"dd.span_id":  span.Context().SpanID(),
+			"service": serviceName,
+			"req_id":  requestid.FromContext(r.Context()),
 		})
 
 		metrics := httpsnoop.CaptureMetrics(h, w, r.WithContext(ContextWithLogger(r.Context(), logger)))

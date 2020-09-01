@@ -3,16 +3,9 @@ package main
 import (
 	"context"
 	"flag"
-	"fmt"
 	"net/http"
 	"net/http/httputil"
-	"os"
 	"strconv"
-
-	sqltrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/database/sql"
-	datadog "gopkg.in/DataDog/dd-trace-go.v1/contrib/net/http"
-	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext"
-	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 
 	"github.com/sirupsen/logrus"
 	"github.com/splice/catalog-interview/libs/golang/healthcheck"
@@ -42,7 +35,6 @@ func main() {
 	lg.SetFormatter(&logrus.JSONFormatter{})
 	log := lg.WithFields(logrus.Fields{"service": serviceName})
 	ctx := context.Background()
-	ctx = sqltrace.WithSpanTags(ctx, map[string]string{"splice.service": serviceName})
 	ctx = requestlogger.ContextWithLogger(ctx, log)
 
 	hc := healthcheck.New(serviceName)
@@ -69,16 +61,9 @@ func main() {
 			w.Header().Set("X-Service", serviceName)
 
 			handler := requestid.Middleware(requestlogger.Middleware(mux, serviceName))
-			datadog.WrapHandler(handler, serviceName, fmt.Sprintf("%s %s", r.Method, r.URL.Path)).ServeHTTP(w, r.WithContext(ctx))
+			handler.ServeHTTP(w, r.WithContext(ctx))
 		}
 	}
-
-	tracer.Start(
-		tracer.WithGlobalTag("env", os.Getenv("DATADOG_ENV")),
-		tracer.WithGlobalTag(ext.ManualKeep, true),
-		tracer.WithServiceName(serviceName),
-	)
-	defer tracer.Stop()
 
 	hc.Start(ctx)
 	serverPort := ""
