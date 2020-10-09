@@ -14,8 +14,13 @@ type ProductRepository struct {
 	StorageLoc string
 }
 
+type ProductsParams struct {
+	Limit int
+	Tag   string
+}
+
 // FindAllProducts returns zero or more products.
-func (pr *ProductRepository) FindAllProducts(ctx context.Context, limit int) ([]*model.Product, error) {
+func (pr *ProductRepository) FindAllProducts(ctx context.Context, params ProductsParams) ([]*model.Product, error) {
 	var products []*model.Product
 
 	absPath, _ := filepath.Abs(pr.StorageLoc)
@@ -27,9 +32,26 @@ func (pr *ProductRepository) FindAllProducts(ctx context.Context, limit int) ([]
 		return nil, err
 	}
 
-	if len(products) < limit {
-		return products, nil
+	var returnedProducts []*model.Product
+	if params.Tag != "" {
+		for _, product := range products {
+			var shouldReturnProduct bool
+			for _, tag := range product.Tags {
+				if tag == params.Tag {
+					shouldReturnProduct = true
+				}
+			}
+			if shouldReturnProduct {
+				returnedProducts = append(returnedProducts, product)
+			}
+		}
+	} else {
+		returnedProducts = products
 	}
 
-	return products[:limit], nil
+	if len(products) < params.Limit {
+		return returnedProducts, nil
+	}
+
+	return returnedProducts[:params.Limit], nil
 }
